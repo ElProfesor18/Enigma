@@ -8,6 +8,7 @@ import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
+import com.chess.engine.piece.Piece.PieceType;
 
 import chess.com.engine.Alliance;
 
@@ -15,7 +16,7 @@ public class Rook extends Piece{
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {-8, -1, 1, 8};
 	
-	Rook(int piecePosition, Alliance pieceAlliance) {
+	public Rook(Alliance pieceAlliance, int piecePosition) {
 		super(piecePosition, pieceAlliance);
 	}
 
@@ -65,6 +66,11 @@ public class Rook extends Piece{
 		}
 		
 		return legalMoves;
+	}
+	
+	@Override 
+	public String toString() {
+		 return PieceType.ROOK.toString();
 	}
 	
 //	Edge Cases:

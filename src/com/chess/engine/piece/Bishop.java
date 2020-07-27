@@ -13,7 +13,7 @@ public class Bishop extends Piece{
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {-9, -7, 7, 9};
 	
-	Bishop(int piecePosition, Alliance pieceAlliance) {
+	public Bishop(Alliance pieceAlliance, int piecePosition) {
 		super(piecePosition, pieceAlliance); 
 	}
 
@@ -63,6 +63,11 @@ public class Bishop extends Piece{
 		}
 		
 		return legalMoves;
+	}
+	
+	@Override 
+	public String toString() {
+		 return PieceType.BISHOP.toString();
 	}
 	
 //	Edge Cases:

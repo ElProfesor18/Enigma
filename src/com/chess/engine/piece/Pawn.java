@@ -1,12 +1,11 @@
 package com.chess.engine.piece;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
+import com.chess.engine.piece.Piece.PieceType;
 
 import chess.com.engine.Alliance;
 
@@ -14,7 +13,7 @@ public class Pawn extends Piece {
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {8};
 
-	Pawn(int piecePosition, Alliance pieceAlliance) { 
+	public Pawn(Alliance pieceAlliance, int piecePosition) { 
 		super(piecePosition, pieceAlliance);
 		// TODO Auto-generated constructor stub
 	}
@@ -83,6 +82,11 @@ public class Pawn extends Piece {
 		}
 		
 		return legalMoves;
+	}
+	
+	@Override 
+	public String toString() {
+		 return PieceType.PAWN.toString();
 	}
 
 }

@@ -6,6 +6,7 @@ import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
+import com.chess.engine.piece.Piece.PieceType;
 
 import chess.com.engine.Alliance;
 
@@ -13,7 +14,7 @@ public class Knight extends Piece{
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {-17, -15, -10, -6, 6, 10, 15, 17};
 	
-	Knight(int piecePosition, Alliance pieceAlliance) {
+	public Knight(Alliance pieceAlliance, int piecePosition) {
 		super(piecePosition, pieceAlliance);
 	}
 	
@@ -50,6 +51,11 @@ public class Knight extends Piece{
 		}
 		
 		return legalMoves;
+	}
+	
+	@Override 
+	public String toString() {
+		 return PieceType.KNIGHT.toString();
 	}
 	
 //	Edge Cases:
