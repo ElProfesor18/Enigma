@@ -3,33 +3,33 @@ package chess.com.engine;
 public enum Alliance {
 	WHITE{
 		@Override
-		int getDirection() {
+		public int getDirection() {
 			return -1;
 		}
 		
 		@Override
-		boolean isWhite() {
+		public boolean isWhite() {
 			return true;
 		}
 		
 		@Override
-		boolean isBlack() {
+		public boolean isBlack() {
 			return false;
 		}
 	},
 	
 	BLACK{
-		int getDirection() {
+		public int getDirection() {
 			return 1;
 		}
 		
 		@Override
-		boolean isWhite() {
+		public boolean isWhite() {
 			return false;
 		}
 		
 		@Override
-		boolean isBlack() {
+		public boolean isBlack() {
 			return true;
 		}
 	};
