@@ -1,4 +1,4 @@
-package com.chess.engine.board;
+ package com.chess.engine.board;
 import java.util.*;
 
 import com.chess.engine.piece.Bishop;
@@ -8,6 +8,9 @@ import com.chess.engine.piece.Pawn;
 import com.chess.engine.piece.Piece;
 import com.chess.engine.piece.Queen;
 import com.chess.engine.piece.Rook;
+import com.chess.engine.player.BlackPlayer;
+import com.chess.engine.player.Player;
+import com.chess.engine.player.WhitePlayer;
 
 import chess.com.engine.Alliance;
 
@@ -16,6 +19,10 @@ public class Board {
 	private final List<Tile> gameBoard;
 	private final Collection<Piece> whitePieces;
 	private final Collection<Piece> blackPieces;
+	 
+	private final WhitePlayer whitePlayer;
+	private final BlackPlayer blackPlayer;
+	private final Player currentPlayer;
 	
 	private Board(Builder builder) {
 		this.gameBoard = createGameBoard(builder);
@@ -24,6 +31,14 @@ public class Board {
 		
 		final Collection <Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
 		final Collection <Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
+		
+//		We need both player moves as parameter here, to check for legal, 
+//		castle moves. 
+		this.whitePlayer = new WhitePlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+		this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
+		
+//		TODO
+		this.currentPlayer = null;
 	}
 	
 	@Override
@@ -32,7 +47,7 @@ public class Board {
 		
 		for(int i=0; i<BoardUtils.NUM_TILES; i++) {
 			final String tileText = this.gameBoard.get(i).toString();;
-			builder.append(String.format("%3s", tileText));
+			builder.append(String.format("%3s",  ));
 			
 			if((i+1)%BoardUtils.NUM_TILES_PER_ROW == 0) {
 				builder.append("\n");
@@ -40,6 +55,14 @@ public class Board {
 		}
 		
 		return builder.toString();
+	}
+	
+	public Collection <Piece> getBlackPieces(){
+		return this.blackPieces;
+	}
+	
+	public Collection <Piece> getWhitePieces(){
+		return this.whitePieces;
 	}
 	
 	private Collection <Move> calculateLegalMoves(final Collection <Piece> pieces){
@@ -158,5 +181,17 @@ public class Board {
 		public Board build() {
 			return new Board(this);
 		}
+	}
+
+	public Player blackPlayer() {
+		return this.whitePlayer;
+	}
+
+	public Player whitePlayer() {
+		return this.blackPlayer;
+	}
+
+	public Player currentPlayer() {
+		return this.currentPlayer;
 	}
 }

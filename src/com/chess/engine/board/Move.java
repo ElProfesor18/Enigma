@@ -19,6 +19,13 @@ public abstract class Move {
 		
 		public MajorMove(final Board board, final Piece movedPiece, final int destinationCoordinate){
 			super(board, movedPiece, destinationCoordinate);
+		} 
+
+//		Returns a new board, with current move executed.
+		@Override
+		public Board execute() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 	
@@ -31,5 +38,17 @@ public abstract class Move {
 			super(board, movedPiece, destinationCoordinate);
 			this.attackedPiece = attackedPiece; 
 		}
+
+		@Override
+		public Board execute() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 	}
+
+	public int getDestinationCoordinate() {
+		return this.destinationCoordinate;
+	}
+
+	public abstract Board execute();
 }
