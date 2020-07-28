@@ -16,7 +16,7 @@ public class Rook extends Piece{
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {-8, -1, 1, 8};
 	
-	public Rook(Alliance pieceAlliance, int piecePosition) {
+	public Rook(final Alliance pieceAlliance, final int piecePosition) {
 		super(PieceType.ROOK, piecePosition, pieceAlliance);
 	}
 
@@ -82,5 +82,15 @@ public class Rook extends Piece{
 		return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidateOffset == 1);
 	} 
 	
-
+//	TODO: Precomputation!
+	@Override
+	public Rook movePiece(Move move) {
+		return new Rook(move.getMovedPiece().getPieceAlliance(), 
+				move.getDestinationCoordinate());
+	}
+	
+	@Override
+	public PieceType getPieceType() {
+		return PieceType.ROOK;
+	} 
 } 

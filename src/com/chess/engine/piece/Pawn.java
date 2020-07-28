@@ -13,7 +13,7 @@ public class Pawn extends Piece {
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {8};
 
-	public Pawn(Alliance pieceAlliance, int piecePosition) { 
+	public Pawn(final Alliance pieceAlliance, final int piecePosition) { 
 		super(PieceType.PAWN, piecePosition, pieceAlliance);
 		// TODO Auto-generated constructor stub
 	}
@@ -34,7 +34,7 @@ public class Pawn extends Piece {
 			}
 			
 			if(currentCandidateOffset == 8 && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
-//				TODO : More Work!
+//				TODO : More Work (Deal with promotion)!
 				legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
 			}
 			
@@ -88,7 +88,19 @@ public class Pawn extends Piece {
 	public String toString() {
 		 return PieceType.PAWN.toString();
 	}
-
+	
+//	TODO: Precomputation!
+	@Override
+	public Pawn movePiece(Move move) {
+		return new Pawn(move.getMovedPiece().getPieceAlliance(), 
+				move.getDestinationCoordinate());
+	}
+	
+	
+	@Override
+	public PieceType getPieceType() {
+		return PieceType.PAWN;
+	} 
 }
 
 

@@ -6,6 +6,7 @@ import com.chess.engine.board.Board;
 import com.chess.engine.board.BoardUtils;
 import com.chess.engine.board.Move;
 import com.chess.engine.board.Tile;
+import com.chess.engine.piece.Piece.PieceType;
 
 import chess.com.engine.Alliance;
 
@@ -13,7 +14,7 @@ public class Bishop extends Piece{
 	
 	private final static int[] CANDIDATE_MOVE_COORDINATES = {-9, -7, 7, 9};
 	
-	public Bishop(Alliance pieceAlliance, int piecePosition) {
+	public Bishop(final Alliance pieceAlliance, final int piecePosition) {
 		super(PieceType.BISHOP, piecePosition, pieceAlliance); 
 	}
 
@@ -78,6 +79,27 @@ public class Bishop extends Piece{
 	
 	private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset) { 
 		return BoardUtils.EIGHTH_COLUMN[currentPosition] && (candidateOffset == 7 || candidateOffset == -9);
+	}
+	
+//	Instead of Creating new Bishop Objects every time we make a move,
+//	we plan on to precompute all possible pieces at all possible squeares! 
+//	TODO: Precomputation!
+	@Override
+	public Bishop movePiece(Move move) {
+		return new Bishop(move.getMovedPiece().getPieceAlliance(), 
+				move.getDestinationCoordinate());
 	} 
 	
+	@Override
+	public PieceType getPieceType() {
+		return PieceType.BISHOP;
+	} 
 }
+
+
+
+
+
+
+
+
