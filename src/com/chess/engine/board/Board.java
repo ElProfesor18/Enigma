@@ -24,7 +24,7 @@ public class Board {
 	private final BlackPlayer blackPlayer;
 	private final Player currentPlayer;
 	
-	private Board(Builder builder) {
+	private Board(final Builder builder) {
 		this.gameBoard = createGameBoard(builder);
 		this.whitePieces = calculateActivePieces(this.gameBoard, Alliance.WHITE);
 		this.blackPieces = calculateActivePieces(this.gameBoard, Alliance.BLACK);
@@ -38,7 +38,7 @@ public class Board {
 		this.blackPlayer = new BlackPlayer(this, whiteStandardLegalMoves, blackStandardLegalMoves);
 		
 //		TODO
-		this.currentPlayer = null;
+		this.currentPlayer = builder.nextMoveMaker.choosePlayer(this.whitePlayer, this.blackPlayer);
 	}
 	
 	@Override
@@ -47,7 +47,7 @@ public class Board {
 		
 		for(int i=0; i<BoardUtils.NUM_TILES; i++) {
 			final String tileText = this.gameBoard.get(i).toString();;
-			builder.append(String.format("%3s",  ));
+			builder.append(String.format("%3s",  tileText));
 			
 			if((i+1)%BoardUtils.NUM_TILES_PER_ROW == 0) {
 				builder.append("\n");
@@ -154,6 +154,23 @@ public class Board {
 		
 		return builder.build();
 	}
+	
+	public Iterable <Move> getAllLegalMoves() {
+		Collection <Move> collectionA = this.whitePlayer().getLegalMoves();
+		Collection <Move> collectionB = this.blackPlayer().getLegalMoves();
+		
+		Collection <Move> combinedIterables = new ArrayList<>();
+		
+		for(Move move : collectionA) {
+			combinedIterables.add(move);
+		}
+		
+		for(Move move : collectionB) {
+			combinedIterables.add(move);
+		}
+		
+		return combinedIterables;
+	}
 
 	public Tile getTile(final int tileCoordinate) {
 		return gameBoard.get(tileCoordinate);
@@ -163,6 +180,7 @@ public class Board {
 	 
 		Map <Integer, Piece> boardConfig; 
 		Alliance nextMoveMaker;
+		Pawn enPassantPawn;
 		
 		public Builder() {
 			this.boardConfig = new HashMap <>();
@@ -181,6 +199,11 @@ public class Board {
 		public Board build() {
 			return new Board(this);
 		}
+
+		public void setEnPassantPawn(Pawn enPassantPawn) {
+			this.enPassantPawn = enPassantPawn;
+			
+		}
 	}
 
 	public Player blackPlayer() {
@@ -193,5 +216,5 @@ public class Board {
 
 	public Player currentPlayer() {
 		return this.currentPlayer;
-	}
+	} 
 }
