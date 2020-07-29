@@ -34,8 +34,8 @@ public class Pawn extends Piece{
 
             /* Pawn Jump */
             else if(currentCandidateOffset == 16 && this.isFirstMove() &&
-                    ( (BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
-                            (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.getPieceAlliance().isWhite()) ) ) {
+                    ( (BoardUtils.SEVENTH_RANK[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
+                            (BoardUtils.SECOND_RANK[this.piecePosition] && this.getPieceAlliance().isWhite()) ) ) {
                 final int behindCandidateDestinationCoordinate = this.piecePosition + (this.pieceAlliance.getDirection()*8);
 
 //				TODO : More Work (Deal with Pawn Jump)!
