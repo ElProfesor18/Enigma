@@ -1,5 +1,6 @@
 package com.chess.engine.board;
 
+import com.chess.engine.pieces.King;
 import com.chess.engine.pieces.Pawn;
 import com.chess.engine.pieces.Piece;
 import com.chess.engine.board.Board.Builder;
@@ -211,12 +212,6 @@ public abstract class Move {
         public Rook getCastleRook() {
             return this.castleRook;
         }
-        public int getCastleRookStart() {
-            return this.castleRookStart;
-        }
-        public int getCastleRookDestination() {
-            return this.castleRookDestination;
-        }
 
         @Override
         public Board execute() {
@@ -233,7 +228,10 @@ public abstract class Move {
             }
 
             /* Set the King */
-            builder.setPiece(this.movedPiece);
+
+            /* Solve the movedPiece Castling Issue by manually creating a King object! */
+            Piece castledKing = new King(movedPiece.getPieceAlliance(), this.destinationCoordinate);
+            builder.setPiece(castledKing);
 			 /* Manually create a new Rook object and then set it. */
 //			 TODO: Set isFirst Move as False!
             builder.setPiece(new Rook(this.getCastleRook().getPieceAlliance(), this.castleRookDestination));
@@ -295,7 +293,7 @@ public abstract class Move {
                                       final int destinationCoordinate) {
 
 //			We can later review this code and get only current player's
-//			legal moves.
+//			legal moves
             for(final Move move : board.getAllLegalMoves()) {
                 if(move.getCurrentCoordinate() == currentCoordinate &&
                         move.getDestinationCoordinate() == destinationCoordinate)
