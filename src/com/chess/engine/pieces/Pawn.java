@@ -12,7 +12,12 @@ public class Pawn extends Piece{
     private final static int[] CANDIDATE_MOVE_COORDINATES = {8, 16};
 
     public Pawn(final Alliance pieceAlliance, final int piecePosition) {
-        super(PieceType.PAWN, piecePosition, pieceAlliance);
+        super(PieceType.PAWN, piecePosition, pieceAlliance, true);
+    }
+
+    public Pawn(final Alliance pieceAlliance, final int piecePosition,
+                final boolean isFirstMove) {
+        super(PieceType.PAWN, piecePosition, pieceAlliance, isFirstMove);
     }
 
     @Override
@@ -41,7 +46,7 @@ public class Pawn extends Piece{
 //				TODO : More Work (Deal with Pawn Jump)!
                 if(!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() &&
                         !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
-                    legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                    legalMoves.add(new Move.MajorMove.PawnJump(board, this, candidateDestinationCoordinate));
                 }
             }
 
@@ -52,7 +57,8 @@ public class Pawn extends Piece{
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
                     if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
 //                        TODO: Attack Move + Conflict (Promotion + Attack)
-                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new Move.MajorMove.PawnAttackMove(board, this,
+                                candidateDestinationCoordinate, pieceOnCandidate));
                     }
                 }
             }
@@ -65,7 +71,8 @@ public class Pawn extends Piece{
                     final Piece pieceOnCandidate = board.getTile(candidateDestinationCoordinate).getPiece();
                     if (this.pieceAlliance != pieceOnCandidate.getPieceAlliance()) {
 //                        TODO: Attack Move + Conflict (Promotion + Attack)
-                        legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
+                        legalMoves.add(new Move.MajorMove.PawnAttackMove(board, this,
+                                candidateDestinationCoordinate, pieceOnCandidate));
                     }
                 }
             }
