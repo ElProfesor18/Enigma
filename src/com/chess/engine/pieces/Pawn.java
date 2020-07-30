@@ -50,6 +50,7 @@ public class Pawn extends Piece{
                 }
             }
 
+            /* TODO: Debug Pawn Attack! */
             else if(currentCandidateOffset == 7 &&
                     !( (BoardUtils.EIGHTH_COLUMN[this.piecePosition] && this.getPieceAlliance().isWhite()) ||
                             (BoardUtils.FIRST_COLUMN[this.piecePosition] && this.getPieceAlliance().isBlack()) )) {
@@ -77,6 +78,7 @@ public class Pawn extends Piece{
                 }
             }
         }
+
         return ImmutableList.copyOf(legalMoves);
     }
 
