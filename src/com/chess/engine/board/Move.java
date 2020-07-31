@@ -46,6 +46,9 @@ public abstract class Move {
     public Piece getAttackedPiece(){
         return null;
     }
+    public Board getBoard(){
+        return this.board;
+    }
 
     @Override
     public int hashCode() {
@@ -185,6 +188,11 @@ public abstract class Move {
         public boolean equals(final Object other){
             return (this == other || other instanceof PawnMove && super.equals(other));
         }
+
+        @Override
+        public String toString(){
+            return BoardUtils.getPositionAtCoordinate(destinationCoordinate);
+        }
     }
 
     public static class PawnAttackMove extends AttackMove{
@@ -235,6 +243,61 @@ public abstract class Move {
             builder.setPiece(this.movedPiece.movePiece(this));
             builder.setMoveMaker(this.board.currentPlayer().getOpponent().getAlliance());
             return builder.build();
+        }
+    }
+
+    public static class PawnPromotion extends Move {
+        final Move decoratedMove;
+        final Pawn promotedPawn;
+
+        public PawnPromotion(final Move decoratedMove){
+            super(decoratedMove.getBoard(), decoratedMove.getMovedPiece(), decoratedMove.getDestinationCoordinate());
+            this.decoratedMove = decoratedMove;
+            this.promotedPawn = (Pawn) decoratedMove.getMovedPiece();
+        }
+
+        @Override
+        public int hashCode(){
+            return decoratedMove.hashCode()*31 + promotedPawn.hashCode();
+        }
+
+        @Override
+        public boolean equals(final Object other){
+            return this == other || other instanceof PawnPromotion && super.equals(other);
+        }
+
+        @Override
+        public Board execute(){
+            final Board pawnMovedMove = this.decoratedMove.execute();
+            final Builder builder = new Builder();
+
+            for(final Piece piece : board.currentPlayer().getActivePieces()){
+                if(!this.promotedPawn.equals(piece)){
+                    builder.setPiece(piece);
+                }
+            }
+            for(final Piece piece : board.currentPlayer().getOpponent().getActivePieces()){
+                builder.setPiece(piece);
+            }
+
+            builder.setPiece(this.promotedPawn.getPromotionPiece().movePiece(this));
+            builder.setMoveMaker(board.currentPlayer().getOpponent().getAlliance());
+            return builder.build();
+        }
+
+        public boolean isAttacked(){
+            return this.decoratedMove.isAttack();
+        }
+
+        @Override
+        public Piece getAttackedPiece(){
+            return this.decoratedMove.getAttackedPiece();
+        }
+
+        @Override
+        public String toString(){
+            /* Update this if we change auto queen on promotion! */
+            return BoardUtils.getPositionAtCoordinate(destinationCoordinate) + "=" + "Q";
         }
     }
 
