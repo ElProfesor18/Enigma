@@ -84,8 +84,8 @@ public class TakenPiecesPanel extends  JPanel{
 
                 final BufferedImage image = ImageIO.read(new File(path));
 
-                final ImageIcon imageIcon= new ImageIcon(image);
-                final JLabel imageLabel = new JLabel();
+                final ImageIcon imageIcon = new ImageIcon(image);
+                final JLabel imageLabel = new JLabel(imageIcon);
                 this.southPanel.add(imageLabel);
             } catch (final IOException e){
                 e.printStackTrace();
@@ -101,7 +101,7 @@ public class TakenPiecesPanel extends  JPanel{
                 final BufferedImage image = ImageIO.read(new File(path));
 
                 final ImageIcon imageIcon= new ImageIcon(image);
-                final JLabel imageLabel = new JLabel();
+                final JLabel imageLabel = new JLabel(imageIcon);
                 this.southPanel.add(imageLabel);
             } catch (final IOException e){
                 e.printStackTrace();
