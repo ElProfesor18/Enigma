@@ -9,7 +9,7 @@ public class Enigma {
         Board board = Board.createStandardBoard();
         System.out.println(board);
 
-        Table table = new Table();
+        Table.get().show();
 
         System.out.println("Jay Sabale");
     }
